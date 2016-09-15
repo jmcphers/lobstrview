@@ -1,0 +1,7 @@
+dependencies:
+  - name: lobstrview
+    version: 1.0.0
+    src: htmlwidgets/lib
+    script:
+      - lobstr.js
+

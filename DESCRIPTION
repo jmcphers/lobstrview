@@ -1,0 +1,9 @@
+Package: lobstrview
+Type: Package
+Title: HTML Widget for lobstr output
+Version: 0.1.0
+Authors@R: person("Jonathan", "McPherson", email = "jonathan@rstudio.com", role = c("aut", "cre"))
+Description: 
+License: MIT
+LazyData: TRUE
+Imports: lobstr
