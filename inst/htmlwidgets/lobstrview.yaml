@@ -4,4 +4,6 @@ dependencies:
     src: htmlwidgets/lib
     script:
       - lobstr.js
+    stylesheet:
+      - lobstr.css
 

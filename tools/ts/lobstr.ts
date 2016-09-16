@@ -7,7 +7,7 @@ interface LobstrObject {
 }
 
 interface LobstrChild {
-    name: string[],
+    name: string,
     object: LobstrObject
 }
 
@@ -28,12 +28,25 @@ class LobstrView {
 
     renderChild(par: HTMLElement, obj: LobstrChild, lvl: number): void {
         let ele = document.createElement("div");
+        ele.className = "child";
         let desc = document.createElement("div");
-        desc.innerText = obj.name + ": " + obj.object.type + " " +
-            obj.object.desc + " " + obj.object.size;
-        desc.style.marginLeft = (lvl * 5) + "px";
+
+        // add the name
+        let name = document.createElement("span");
+        name.className = "var_name";
+        desc.appendChild(name);
+        name.innerText = obj.name;
+
+        // add the details
+        let details = document.createElement("span");
+        details.innerText = obj.object.type + " " + obj.object.desc + " " + 
+            obj.object.size;
+        desc.appendChild(details);
+
         ele.appendChild(desc);
         par.appendChild(ele);
+
+        // render children recursively
         for (let child of obj.object.children) {
             this.renderChild(ele, child, lvl + 1);
         }
