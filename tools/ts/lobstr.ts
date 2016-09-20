@@ -18,11 +18,15 @@ class LobstrView {
     }
 
     load(data: LobstrObject): void {
-        this.host.innerText = data.type + " " + 
-                              data.desc + " " + 
-                              data.size;
+        let ele = document.createElement("div");
+        this.host.appendChild(ele);
+
+        ele.innerText = data.type + " " + 
+                        data.desc + " " + 
+                        data.size;
+        ele.className = "host";
         for (let child of data.children) {
-            this.renderChild(this.host, child, 1);
+            this.renderChild(ele, child, 1);
         }
     }
 
@@ -39,16 +43,31 @@ class LobstrView {
 
         // add the details
         let details = document.createElement("span");
-        details.innerText = obj.object.type + " " + obj.object.desc + " " + 
-            obj.object.size;
+        details.innerText = obj.object.type + " " + obj.object.desc + " (" + 
+            obj.object.size + ")";
         desc.appendChild(details);
 
         ele.appendChild(desc);
         par.appendChild(ele);
 
+        // create show/hide on click
+        let children = document.createElement("div");
+        ele.appendChild(children);
+        desc.addEventListener("click", () => {
+            if (children.style.display === "block")
+                children.style.display = "none";
+            else
+                children.style.display = "block";
+        });
+
+        // hide all but the first level of children initially
+        if (lvl > 1) {
+            children.style.display = "none";
+        }
+
         // render children recursively
         for (let child of obj.object.children) {
-            this.renderChild(ele, child, lvl + 1);
+            this.renderChild(children, child, lvl + 1);
         }
     }
 

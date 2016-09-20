@@ -3,6 +3,13 @@
   margin-right: 5px;
 }
 
+.host {
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+}
+
 .child {
-  margin-left: 5px;
+  cursor: pointer;
+  margin-left: 10px;
 }
