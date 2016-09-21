@@ -18,6 +18,20 @@ var LobstrView = (function () {
         var ele = document.createElement("div");
         ele.className = "child";
         var desc = document.createElement("div");
+        // if there's moe than one child, draw the expander
+        var expand;
+        if (obj.object.children != null &&
+            obj.object.children.length > 0) {
+            expand = document.createElement("div");
+            var h = document.createElement("div");
+            h.className = "expand-horiz";
+            expand.appendChild(h);
+            var v = document.createElement("div");
+            v.className = "expand-vert";
+            expand.appendChild(v);
+            expand.className = "expander";
+            desc.appendChild(expand);
+        }
         // add the name
         var name = document.createElement("span");
         name.className = "var_name";
@@ -34,14 +48,21 @@ var LobstrView = (function () {
         var children = document.createElement("div");
         ele.appendChild(children);
         desc.addEventListener("click", function () {
-            if (children.style.display === "block")
+            if (children.style.display === "block") {
                 children.style.display = "none";
-            else
+                expand.className = "expander";
+            }
+            else {
                 children.style.display = "block";
+                expand.className = "expander expanded";
+            }
         });
         // hide all but the first level of children initially
         if (lvl > 1) {
             children.style.display = "none";
+        }
+        else {
+            expand.className += " expanded";
         }
         // render children recursively
         for (var _i = 0, _a = obj.object.children; _i < _a.length; _i++) {

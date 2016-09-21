@@ -13,3 +13,35 @@
   cursor: pointer;
   margin-left: 10px;
 }
+
+.expand-horiz, .expand-vert {
+  background-color: #909090;
+  position: absolute;
+}
+
+.expand-horiz {
+  width: 7px;
+  height: 1px;
+  top: 4px;
+  left: 1px;
+}
+
+.expand-vert {
+  height: 7px;
+  width: 1px;
+  left: 4px;
+  top: 1px;
+}
+
+.expanded .expand-vert {
+  display: none;
+}
+.expander {
+  height: 9px;
+  width: 9px;
+  border: 1px solid #909090;
+  border-radius: 3px;
+  display: inline-block;
+  position: relative;
+  margin-right: 5px;
+}
