@@ -19,10 +19,9 @@ var LobstrView = (function () {
         ele.className = "child";
         var desc = document.createElement("div");
         // if there's moe than one child, draw the expander
-        var expand;
-        if (obj.object.children != null &&
+        var expand = document.createElement("div");
+        if (obj.object.children !== null &&
             obj.object.children.length > 0) {
-            expand = document.createElement("div");
             var h = document.createElement("div");
             h.className = "expand-horiz";
             expand.appendChild(h);
@@ -30,8 +29,11 @@ var LobstrView = (function () {
             v.className = "expand-vert";
             expand.appendChild(v);
             expand.className = "expander";
-            desc.appendChild(expand);
         }
+        else {
+            expand.className = "leafnode";
+        }
+        desc.appendChild(expand);
         // add the name
         var name = document.createElement("span");
         name.className = "var_name";
