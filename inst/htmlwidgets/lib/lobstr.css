@@ -7,6 +7,21 @@
   overflow: auto;
 }
 
+.host th {
+  background-color: #e0e0e0;
+  text-align: left;
+  padding: 5px;
+  border-top: 1px solid #f0f0f0;
+  border-left: 1px solid #f0f0f0;
+  border-bottom: 1px solid #c0c0c0;
+  border-right: 1px solid #c0c0c0;
+  border-radius: 3px;
+}
+
+.host tr {
+  border-bottom: 1px solid #e0e0e0;
+}
+
 .child {
   cursor: pointer;
   margin-left: 15px;

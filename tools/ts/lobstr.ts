@@ -21,13 +21,31 @@ class LobstrView {
         let ele = document.createElement("table");
         this.host.appendChild(ele);
 
-        let rootRow = document.createElement("tr");
-        let root: HTMLTableDataCellElement = document.createElement("td");
+        let header: HTMLTableRowElement = document.createElement("tr");
 
-        root.innerText = data.type + " " + 
-                        data.desc + " " + 
-                        data.size;
-        rootRow.appendChild(root);
+        let hname: HTMLTableDataCellElement = document.createElement("th");
+        hname.innerText = "Name";
+        header.appendChild(hname);
+        let hdesc: HTMLTableDataCellElement = document.createElement("th");
+        hdesc.innerText = "Type";
+        header.appendChild(hdesc);
+        let hsize: HTMLTableDataCellElement = document.createElement("th");
+        hsize.innerText = "Size";
+        header.appendChild(hsize);
+        ele.appendChild(header);
+
+        let rootRow = document.createElement("tr");
+
+        // fill out details for root node
+        let name = document.createElement("td");
+        rootRow.appendChild(name);
+        let details = document.createElement("td");
+        details.innerText = data.type + " " + data.desc;
+        rootRow.appendChild(details);
+        let size = document.createElement("td");
+        size.innerText = data.size;
+        rootRow.appendChild(size);
+
         ele.appendChild(rootRow);
 
         ele.className = "host";
@@ -40,7 +58,7 @@ class LobstrView {
         let row: HTMLTableRowElement = document.createElement("tr");
         let name: HTMLTableDataCellElement = document.createElement("td");
 
-        // if there's moe than one child, draw the expander
+        // if there's more than one child, draw the expander
         let expand = document.createElement("div");
         if (obj.object.children !== null &&
             obj.object.children.length > 0) {
@@ -54,6 +72,7 @@ class LobstrView {
         } else {
             expand.className = "leafnode";
         }
+        expand.style.marginLeft = (lvl * 15) + "px";
         name.appendChild(expand);
 
         // add the name
@@ -101,7 +120,7 @@ class LobstrView {
                 expand.className = "expander";
             } else {
                 for (let child of childrows) {
-                    child.style.display = "block";
+                    child.style.removeProperty("display");
                 }
                 expand.className = "expander expanded";
             }

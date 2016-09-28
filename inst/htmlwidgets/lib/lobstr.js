@@ -5,12 +5,27 @@ var LobstrView = (function () {
     LobstrView.prototype.load = function (data) {
         var ele = document.createElement("table");
         this.host.appendChild(ele);
+        var header = document.createElement("tr");
+        var hname = document.createElement("th");
+        hname.innerText = "Name";
+        header.appendChild(hname);
+        var hdesc = document.createElement("th");
+        hdesc.innerText = "Type";
+        header.appendChild(hdesc);
+        var hsize = document.createElement("th");
+        hsize.innerText = "Size";
+        header.appendChild(hsize);
+        ele.appendChild(header);
         var rootRow = document.createElement("tr");
-        var root = document.createElement("td");
-        root.innerText = data.type + " " +
-            data.desc + " " +
-            data.size;
-        rootRow.appendChild(root);
+        // fill out details for root node
+        var name = document.createElement("td");
+        rootRow.appendChild(name);
+        var details = document.createElement("td");
+        details.innerText = data.type + " " + data.desc;
+        rootRow.appendChild(details);
+        var size = document.createElement("td");
+        size.innerText = data.size;
+        rootRow.appendChild(size);
         ele.appendChild(rootRow);
         ele.className = "host";
         for (var _i = 0, _a = data.children; _i < _a.length; _i++) {
@@ -21,7 +36,7 @@ var LobstrView = (function () {
     LobstrView.prototype.renderChild = function (par, obj, lvl) {
         var row = document.createElement("tr");
         var name = document.createElement("td");
-        // if there's moe than one child, draw the expander
+        // if there's more than one child, draw the expander
         var expand = document.createElement("div");
         if (obj.object.children !== null &&
             obj.object.children.length > 0) {
@@ -36,6 +51,7 @@ var LobstrView = (function () {
         else {
             expand.className = "leafnode";
         }
+        expand.style.marginLeft = (lvl * 15) + "px";
         name.appendChild(expand);
         // add the name
         var label = document.createElement("span");
@@ -81,7 +97,7 @@ var LobstrView = (function () {
             else {
                 for (var _a = 0; _a < childrows.length; _a++) {
                     var child = childrows[_a];
-                    child.style.display = "block";
+                    child.style.removeProperty("display");
                 }
                 expand.className = "expander expanded";
             }
