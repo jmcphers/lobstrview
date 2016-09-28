@@ -3,11 +3,15 @@ var LobstrView = (function () {
         this.host = el;
     }
     LobstrView.prototype.load = function (data) {
-        var ele = document.createElement("div");
+        var ele = document.createElement("table");
         this.host.appendChild(ele);
-        ele.innerText = data.type + " " +
+        var rootRow = document.createElement("tr");
+        var root = document.createElement("td");
+        root.innerText = data.type + " " +
             data.desc + " " +
             data.size;
+        rootRow.appendChild(root);
+        ele.appendChild(rootRow);
         ele.className = "host";
         for (var _i = 0, _a = data.children; _i < _a.length; _i++) {
             var child = _a[_i];
@@ -15,9 +19,8 @@ var LobstrView = (function () {
         }
     };
     LobstrView.prototype.renderChild = function (par, obj, lvl) {
-        var ele = document.createElement("div");
-        ele.className = "child";
-        var desc = document.createElement("div");
+        var row = document.createElement("tr");
+        var name = document.createElement("td");
         // if there's moe than one child, draw the expander
         var expand = document.createElement("div");
         if (obj.object.children !== null &&
@@ -33,44 +36,57 @@ var LobstrView = (function () {
         else {
             expand.className = "leafnode";
         }
-        desc.appendChild(expand);
+        name.appendChild(expand);
         // add the name
-        var name = document.createElement("span");
-        name.className = "var_name";
-        desc.appendChild(name);
-        name.innerText = obj.name;
+        var label = document.createElement("span");
+        label.className = "var_name";
+        label.innerText = obj.name;
+        name.appendChild(label);
+        row.appendChild(name);
         // add the details
-        var details = document.createElement("span");
-        details.innerText = obj.object.type + " " + obj.object.desc + " (" +
-            obj.object.size + ")";
-        desc.appendChild(details);
-        ele.appendChild(desc);
-        par.appendChild(ele);
-        // create show/hide on click
-        var children = document.createElement("div");
-        ele.appendChild(children);
-        desc.addEventListener("click", function () {
-            if (children.style.display === "block") {
-                children.style.display = "none";
-                expand.className = "expander";
-            }
-            else {
-                children.style.display = "block";
-                expand.className = "expander expanded";
-            }
-        });
+        var details = document.createElement("td");
+        details.innerText = obj.object.type + " " + obj.object.desc;
+        row.appendChild(details);
+        // add the size
+        var size = document.createElement("td");
+        size.innerText = obj.object.size;
+        row.appendChild(size);
+        // add the whole thing to the parent
+        par.appendChild(row);
         // hide all but the first level of children initially
-        if (lvl > 1) {
-            children.style.display = "none";
+        if (lvl <= 1) {
         }
         else {
             expand.className += " expanded";
         }
         // render children recursively
+        var childrows = [];
         for (var _i = 0, _a = obj.object.children; _i < _a.length; _i++) {
             var child = _a[_i];
-            this.renderChild(children, child, lvl + 1);
+            var childele = this.renderChild(par, child, lvl + 1);
+            childrows.push(childele);
+            if (lvl > 1) {
+                childele.style.display = "none";
+            }
         }
+        // create show/hide on click handler
+        expand.addEventListener("click", function () {
+            if (expand.className === "expander expanded") {
+                for (var _i = 0; _i < childrows.length; _i++) {
+                    var child = childrows[_i];
+                    child.style.display = "none";
+                }
+                expand.className = "expander";
+            }
+            else {
+                for (var _a = 0; _a < childrows.length; _a++) {
+                    var child = childrows[_a];
+                    child.style.display = "block";
+                }
+                expand.className = "expander expanded";
+            }
+        });
+        return row;
     };
     return LobstrView;
 })();
