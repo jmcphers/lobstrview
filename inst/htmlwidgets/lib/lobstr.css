@@ -22,6 +22,10 @@
   border-bottom: 1px solid #e0e0e0;
 }
 
+.host td:nth-child(3) {
+  text-align: right;
+}
+
 .child {
   cursor: pointer;
   margin-left: 15px;
@@ -49,6 +53,7 @@
 .expanded .expand-vert {
   display: none;
 }
+
 .expander, .leafnode {
   height: 9px;
   width: 9px;

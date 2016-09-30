@@ -19,12 +19,13 @@ var LobstrView = (function () {
         var rootRow = document.createElement("tr");
         // fill out details for root node
         var name = document.createElement("td");
+        name.innerText = data.name;
         rootRow.appendChild(name);
         var details = document.createElement("td");
         details.innerText = data.type + " " + data.desc;
         rootRow.appendChild(details);
         var size = document.createElement("td");
-        size.innerText = data.size;
+        size.innerText = data.size.toString();
         rootRow.appendChild(size);
         ele.appendChild(rootRow);
         ele.className = "host";
@@ -65,25 +66,17 @@ var LobstrView = (function () {
         row.appendChild(details);
         // add the size
         var size = document.createElement("td");
-        size.innerText = obj.object.size;
+        size.innerText = obj.object.size.toString();
         row.appendChild(size);
         // add the whole thing to the parent
         par.appendChild(row);
-        // hide all but the first level of children initially
-        if (lvl <= 1) {
-        }
-        else {
-            expand.className += " expanded";
-        }
         // render children recursively
         var childrows = [];
         for (var _i = 0, _a = obj.object.children; _i < _a.length; _i++) {
             var child = _a[_i];
             var childele = this.renderChild(par, child, lvl + 1);
             childrows.push(childele);
-            if (lvl > 1) {
-                childele.style.display = "none";
-            }
+            childele.style.display = "none";
         }
         // create show/hide on click handler
         expand.addEventListener("click", function () {

@@ -1,6 +1,7 @@
 
 interface LobstrObject {
-    size: string,
+    name: string,
+    size: number,
     desc: string,
     type: string,
     children: LobstrChild[]
@@ -38,12 +39,13 @@ class LobstrView {
 
         // fill out details for root node
         let name = document.createElement("td");
+        name.innerText = data.name;
         rootRow.appendChild(name);
         let details = document.createElement("td");
         details.innerText = data.type + " " + data.desc;
         rootRow.appendChild(details);
         let size = document.createElement("td");
-        size.innerText = data.size;
+        size.innerText = data.size.toString();
         rootRow.appendChild(size);
 
         ele.appendChild(rootRow);
@@ -89,26 +91,18 @@ class LobstrView {
 
         // add the size
         let size = document.createElement("td");
-        size.innerText = obj.object.size;
+        size.innerText = obj.object.size.toString();
         row.appendChild(size);
 
         // add the whole thing to the parent
         par.appendChild(row);
-
-        // hide all but the first level of children initially
-        if (lvl <= 1) {
-        } else {
-            expand.className += " expanded";
-        }
 
         // render children recursively
         let childrows: Array<HTMLElement> = [];
         for (let child of obj.object.children) {
             let childele = this.renderChild(par, child, lvl + 1);
             childrows.push(childele);
-            if (lvl > 1) {
-                childele.style.display = "none";
-            }
+            childele.style.display = "none";
         }
 
         // create show/hide on click handler

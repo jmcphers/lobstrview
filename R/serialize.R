@@ -1,8 +1,16 @@
 
 lsv_serialize <- function(obj, addrs = c()) {
   children <- lobstr::prim_children(obj)
+  
+  # read the name argument if we can
+  name <- "<Anonymous>"
+  if (is.name(substitute(obj))) {
+    name <- deparse(substitute(obj))
+  }
+    
   list(
-     size = as.character(lobstr::prim_size(obj)),
+     name = name,
+     size = lobstr::prim_size(obj),
      desc = lobstr::prim_desc(obj),
      type = lobstr::prim_type(obj),
      children = lapply(seq_along(children), function(idx) {
